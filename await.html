@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Async...await</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <h1><span>Async...await</span>: Netflix... chill</h1>
+    <div id="box"></div>
+    <div class="download">
+      <input type="text" name="url" id="url" />
+      <button id="btn">Download</button>
+    </div>
+    <a class="next" href="callback.html">Callback Method ☝</a>
+    <script>
+      //   constant variable
+      const urlInput = document.getElementById("url");
+      const downloadBtn = document.getElementById("btn");
+
+      downloadBtn.addEventListener("click", async () => {
+        const response = await fetch(urlInput.value);
+        const file = await response.blob();
+        const link = document.createElement("a");
+
+        link.href = URL.createObjectURL(file);
+        link.download = new Date().getTime();
+        link.click();
+
+        const videoPlayer = document.createElement("video");
+        const videoContainer = document.getElementById("box");
+        videoPlayer.src = link.href;
+        videoPlayer.autoplay = true;
+        videoPlayer.controls = true;
+        videoPlayer.muted = false;
+        videoPlayer.height = 330;
+        videoPlayer.width = 550;
+
+        await videoContainer.appendChild(videoPlayer);
+      });
+    </script>
+  </body>
+</html>
